@@ -4,8 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class BrowserTest {
     protected WebDriver driver;
     private String browserItem;
-
-
+    
     public WebDriver getWebDriver() {
         if (browserItem == null) {
             browserItem = "chrome";
