@@ -1,11 +1,10 @@
 import PageObject.*;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -23,8 +22,7 @@ public class RegistrationTest extends BrowserTest{
     
     @Before
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        driver = getWebDriver();
         driver.get("https://stellarburgers.nomoreparties.site/");
         email = RandomStringUtils.randomAlphabetic(15) + "@yandex.ru";
         password = RandomStringUtils.randomAlphabetic(15);
@@ -55,7 +53,16 @@ public class RegistrationTest extends BrowserTest{
         assertEquals("Регистрация невозможна", "Некорректный пароль", registrationPage.errorMessageText());
     }
     @After
-    public void tearDown() {
+    @DisplayName("Закрытие браузера и удаление юзера")
+    public void deleteUserAndCloseBrowser() {
+
+        String response = new UserDelete()
+                .loginUser(user)
+                .extract().body()
+                .path("accessToken");
+        if (response != null){
+            new UserDelete().deleteUser(response);
+        }
         driver.quit();
     }
 }

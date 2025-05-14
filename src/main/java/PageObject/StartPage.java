@@ -10,7 +10,7 @@ public class StartPage {
     //Локатор кнопки Личный кабинет
     private final By buttonPersonalAccount = By.xpath(".//p[contains(@class, 'AppHeader_header') and text()='Личный Кабинет']");
     //Локатор кнопки Конструктор
-    private final By buttonСonstructor = By.xpath(".//p[text() = 'Конструктор']");
+    private final By buttonConstructor = By.xpath(".//p[text() = 'Конструктор']");
     //Локатор кнопки StellarBurgers
     private final By logoButton = By.xpath("//div[@class='AppHeader_header__logo__2D0X2']/a[@href='/' ]");
     //Локатор кнопки Оформить заказ
@@ -43,8 +43,8 @@ public class StartPage {
     }
 
     //Метод нажатия на кнопку Конструктор
-    public void clickButtonСonstructor() {
-        driver.findElement(buttonСonstructor).click();
+    public void clickButtonConstructor() {
+        driver.findElement(buttonConstructor).click();
     }
     //Метод нажатия на кнопку StellarBurgers
     public void clickLogoButton() {

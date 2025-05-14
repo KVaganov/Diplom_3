@@ -1,19 +1,17 @@
 import PageObject.ConstructorPage;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.Assert.assertTrue;
 
 public class ConstructorTest extends BrowserTest{
     private WebDriver driver;
+
     ConstructorPage constructorPage;
     @Before
     public void setUp() {
-        getWebDriver();
-        driver = new ChromeDriver();
+        driver = getWebDriver();
         driver.get("https://stellarburgers.nomoreparties.site/");
         constructorPage = new ConstructorPage(driver);
 
@@ -27,6 +25,7 @@ public class ConstructorTest extends BrowserTest{
     }
     @Test
     public void testSaucesTab() {
+        constructorPage.scrollMenuConstructor();
         constructorPage.clickSaucesTab();
         assertTrue("Секция найдена неправильно", constructorPage.checkSauceDisplayed());
 
@@ -36,10 +35,12 @@ public class ConstructorTest extends BrowserTest{
         constructorPage.clickToppingsTab();
         assertTrue("Секция найдена неправильно", constructorPage.checkToppingDisplayed());
     }
-
     @After
     public void tearDown() {
         driver.quit();
     }
+
+
+
 }
 

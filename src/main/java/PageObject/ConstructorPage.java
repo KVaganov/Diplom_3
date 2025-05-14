@@ -16,17 +16,11 @@ public class ConstructorPage {
     private final By saucesTab = By.xpath(".//span[text() = 'Соусы']");
     //Локатор раздела Начинки
     private final By toppingsTab = By.xpath(".//span[text() = 'Начинки']");
-    //Локатор заголовка Булки
-    private final By bunHeader = By.xpath(".//h2[text()= 'Булки']");
-    //Локатор заголовка Соусы
-    private final By saucesHeader = By.xpath(".//h2[text()= 'Соусы']");
-    //Локатор заголовка Начинки
-    private final By toppingsHeader = By.xpath(".//h2[text()= 'Начинки']");
     private final By menuBlock = By.className("BurgerIngredients_ingredients__menuContainer__Xu3Mo");
 
-    private final By  checkBunsDisplayed = By.xpath(".//section[1]/div[2]/h2[1]");
-    private final By checkSauceDisplayed = By.xpath(".//section[1]/div[2]/h2[2]");
-    private final By checkToppingDisplayed = By.xpath(".//section[1]/div[2]/h2[3]");
+    private final By  checkBunsDisplayed = By.xpath("//span[text()='Булки']/..");
+    private final By checkSauceDisplayed = By.xpath("//span[text()='Соусы']/..");
+    private final By checkToppingDisplayed = By.xpath("//span[text()='Начинки']/..");
 
     public ConstructorPage(WebDriver driver) {
         this.driver = driver;
@@ -53,21 +47,14 @@ public class ConstructorPage {
         WebElement element = driver.findElement(menuBlock);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", element);
     }
-    // Метод получения текста кнопки "Посмотреть заказ"
-    public String bunHeader() {
-        return driver.findElement(bunHeader).getText();
-    }
 
     public boolean checkBunsDisplayed() {
-        driver.findElement(bunHeader).click();
         return driver.findElement(checkBunsDisplayed).isDisplayed();
     }
     public boolean checkSauceDisplayed() {
-        driver.findElement(saucesHeader).click();
         return driver.findElement(checkSauceDisplayed).isDisplayed();
     }
     public boolean checkToppingDisplayed() {
-        driver.findElement(toppingsHeader).click();
         return driver.findElement(checkToppingDisplayed).isDisplayed();
     }
 }

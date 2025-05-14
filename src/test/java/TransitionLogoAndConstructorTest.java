@@ -1,19 +1,19 @@
-import PageObject.ConstructorPage;
 import PageObject.RegistrationPage;
 import PageObject.StartPage;
+import PageObject.User;
+import PageObject.UserDelete;
 import io.qameta.allure.junit4.DisplayName;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import java.util.concurrent.TimeUnit;
-
 import static junit.framework.TestCase.assertTrue;
 
+
 public class TransitionLogoAndConstructorTest extends BrowserTest{
+    User user;
     private WebDriver driver;
     StartPage startPage;
     private RegistrationPage registrationPage;
@@ -21,14 +21,15 @@ public class TransitionLogoAndConstructorTest extends BrowserTest{
     private String name;
     private String password;
 
+
     @Before
     public void setUp() {
-        getWebDriver();
-        driver = new ChromeDriver();
+        driver = getWebDriver();
         driver.get("https://stellarburgers.nomoreparties.site/");
         email = RandomStringUtils.randomAlphabetic(10) + "@yandex.ru";
         password = RandomStringUtils.randomAlphabetic(10);
         name = RandomStringUtils.randomAlphabetic(10);
+        user = new User(name, email, password);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         startPage = new StartPage(driver);
         startPage.clickButtonPersonalAccount();
@@ -42,7 +43,7 @@ public class TransitionLogoAndConstructorTest extends BrowserTest{
     @DisplayName("Переход из личного кабинета в конструктор по клику на «Конструктор»»")
     public void transitionConstructorTest() {
         startPage.clickButtonPersonalAccount();
-        startPage.clickButtonСonstructor();
+        startPage.clickButtonConstructor();
         boolean actual = startPage.displayedButtonCreateUserOrder();
         assertTrue(actual);
     }
@@ -55,7 +56,16 @@ public class TransitionLogoAndConstructorTest extends BrowserTest{
         assertTrue(actual);
     }
     @After
-    public void tearDown() {
+    @DisplayName("Закрытие браузера и удаление юзера")
+    public void deleteUserAndCloseBrowser() {
+
+        String response = new UserDelete()
+                .loginUser(user)
+                .extract().body()
+                .path("accessToken");
+        if (response != null){
+            new UserDelete().deleteUser(response);
+        }
         driver.quit();
     }
 }

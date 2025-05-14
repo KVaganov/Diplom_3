@@ -5,9 +5,6 @@ public class BrowserTest {
     protected WebDriver driver;
     private String browserItem;
 
-    public BrowserTest() {
-        this.browserItem = System.getProperty("browser");
-    }
 
     public WebDriver getWebDriver() {
         if (browserItem == null) {

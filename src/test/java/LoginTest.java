@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 import static junit.framework.TestCase.assertTrue;
 
@@ -16,15 +15,16 @@ public class LoginTest extends BrowserTest{
     private String email;
     private String name;
     private String password;
+    User user;
     @Before
     public void setUp() {
-        getWebDriver();
-        driver = new ChromeDriver();
+        driver = getWebDriver();
         driver.get("https://stellarburgers.nomoreparties.site/");
         email = RandomStringUtils.randomAlphabetic(10) + "@yandex.ru";
         password = RandomStringUtils.randomAlphabetic(10);
         name = RandomStringUtils.randomAlphabetic(10);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        user = new User(name, email, password);
         startPage = new StartPage(driver);
         startPage.clickButtonPersonalAccount();
         registrationPage = new RegistrationPage(driver);
@@ -78,7 +78,17 @@ public class LoginTest extends BrowserTest{
         startPage.clickButtonExit();
     }
     @After
-    public void tearDown() {
+    @DisplayName("Закрытие браузера и удаление юзера")
+    public void deleteUserAndCloseBrowser() {
+
+        String response = new UserDelete()
+                .loginUser(user)
+                .extract().body()
+                .path("accessToken");
+        if (response != null){
+            new UserDelete().deleteUser(response);
+        }
         driver.quit();
     }
+
 }
