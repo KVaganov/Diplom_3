@@ -3,7 +3,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import static org.junit.Assert.assertTrue;
+import org.junit.Assert;
 
 public class ConstructorTest extends BrowserTest{
     private WebDriver driver;
@@ -20,20 +20,20 @@ public class ConstructorTest extends BrowserTest{
     public void testBunTab() {
         constructorPage.scrollMenuConstructor();
         constructorPage.clickBunTab();
-        assertTrue("Секция найдена неправильно", constructorPage.checkBunsDisplayed());
+        Assert.assertEquals("Булки", constructorPage.getTextFromSelectedMenu());
 
     }
     @Test
     public void testSaucesTab() {
         constructorPage.scrollMenuConstructor();
         constructorPage.clickSaucesTab();
-        assertTrue("Секция найдена неправильно", constructorPage.checkSauceDisplayed());
+        Assert.assertEquals("Соусы", constructorPage.getTextFromSelectedMenu());
 
     }
     @Test
     public void testToppingsTab() {
         constructorPage.clickToppingsTab();
-        assertTrue("Секция найдена неправильно", constructorPage.checkToppingDisplayed());
+        Assert.assertEquals("Начинки", constructorPage.getTextFromSelectedMenu());
     }
     @After
     public void tearDown() {

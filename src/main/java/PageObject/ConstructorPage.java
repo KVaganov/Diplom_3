@@ -17,10 +17,9 @@ public class ConstructorPage {
     //Локатор раздела Начинки
     private final By toppingsTab = By.xpath(".//span[text() = 'Начинки']");
     private final By menuBlock = By.className("BurgerIngredients_ingredients__menuContainer__Xu3Mo");
+    private final By currentTab = By.xpath(".//div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span");
 
-    private final By  checkBunsDisplayed = By.xpath("//span[text()='Булки']/..");
-    private final By checkSauceDisplayed = By.xpath("//span[text()='Соусы']/..");
-    private final By checkToppingDisplayed = By.xpath("//span[text()='Начинки']/..");
+
 
     public ConstructorPage(WebDriver driver) {
         this.driver = driver;
@@ -48,13 +47,7 @@ public class ConstructorPage {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", element);
     }
 
-    public boolean checkBunsDisplayed() {
-        return driver.findElement(checkBunsDisplayed).isDisplayed();
-    }
-    public boolean checkSauceDisplayed() {
-        return driver.findElement(checkSauceDisplayed).isDisplayed();
-    }
-    public boolean checkToppingDisplayed() {
-        return driver.findElement(checkToppingDisplayed).isDisplayed();
+    public String getTextFromSelectedMenu() {
+        return driver.findElement(currentTab).getText();
     }
 }
